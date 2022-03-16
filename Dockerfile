@@ -1,4 +1,5 @@
-FROM linuxserver/bookstack
+ARG BASE_VERSION=latest
+FROM linuxserver/bookstack:${BASE_VERSION}
 
 # Make directory for storage of font
 RUN mkdir -p /usr/share/fonts/chinese/TrueType
