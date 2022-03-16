@@ -1,0 +1,43 @@
+version: "2"
+services:
+  bookstack_db:
+    image: ghcr.io/linuxserver/mariadb
+    container_name: bookstack_db
+    environment:
+      - PUID=1026
+      - PGID=100
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=dbroot
+      - MYSQL_DATABASE=bookstackapp
+      - MYSQL_USER=bookstack
+      - MYSQL_PASSWORD=bookstack
+#    volumes:
+#      - /volume1/docker/rayruan_bookstack_db:/config
+#      - /volume1/docker/bookstack_tmp:/bookstack_tmp
+    restart: always
+  bookstack:
+    image: rayruan/bookstack:linuxserver_chs
+    container_name: bookstack
+    environment:
+      - PUID=1026
+      - PGID=100 
+#      - APP_URL=https://bookstack.example.syno.me:4443
+      - APP_URL=http://192.168.0.3:26875
+      - DRAWIO=https://drawio.tbone.synology.me:4443/?embed=1&proto=json&spin=1
+      - REVISION_LIMIT=64
+      - DB_HOST=bookstack_db
+      - DB_USER=bookstack
+      - DB_PASS=bookstack
+      - DB_DATABASE=bookstackapp
+      - APP_LANG=zh_CN
+      - WKHTMLTOPDF=/usr/bin/wkhtmltopdf
+# enable wkhtmltopdf refer to: https://www.bookstackapp.com/docs/admin/security/#server-side-requests
+      - ALLOW_UNTRUSTED_SERVER_FETCHING=true
+#    volumes:
+#      - /volume1/docker/rayruan_bookstack:/config
+#      - /volume1/docker/bookstack_tmp:/bookstack_tmp
+    ports:
+      - 26875:80
+    restart: always
+    depends_on:
+      - bookstack_db
