@@ -1,4 +1,4 @@
-ARG BASE_VERSION=latest
+ARG BASE_VERSION=unknow
 FROM linuxserver/bookstack:${BASE_VERSION}
 
 # Make directory for storage of font

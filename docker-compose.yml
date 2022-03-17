@@ -23,6 +23,8 @@ services:
       - PGID=100 
 #      - APP_URL=https://bookstack.example.syno.me:4443
       - APP_URL=http://192.168.0.3:26875
+      # fixed drawio is blocked, refer to: https://www.bookstackapp.com/docs/admin/security/#iframe-src-control
+      - ALLOWED_IFRAME_SOURCES="https://*.example.com[:port] https://*.draw.io https://*.youtube.com https://*.youtube-nocookie.com https://*.vimeo.com"
       - DRAWIO=https://drawio.tbone.synology.me:4443/?embed=1&proto=json&spin=1
       - REVISION_LIMIT=64
       - DB_HOST=bookstack_db
